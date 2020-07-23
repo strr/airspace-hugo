@@ -4,10 +4,27 @@
 
 {{ $data := index .Site.Data .Site.Language.Lang }}
 
+{{ with .Site.Params.calendly_event_url }}
+<section class="calendar-form">
+  <div class="container">
+    <div class="row">
+      <h2 class="mt-40">Let's organise a virtual coffee:</h2>
+      Please use the calendar below to select a good time for us to speak. A box will be provided to leave message details.
+      <!-- Calendly inline widget begin -->
+      <div class="calendly-inline-widget" data-url="{{ . }}" style="min-width:320px;height:750px;"></div>
+      <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
+      <!-- Calendly inline widget end -->
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{ with .Site.Params.contact_form_action }}
 <section class="contact-form">
   <div class="container">
     <div class="row">
-      <form method="POST" action="{{ .Site.Params.contact_form_action | safeURL }}">
+      <h2 class="mt-40">Alternatively, you can just send a message:</h2>
+      <form method="POST" action="{{ . | safeURL }}">
         <div class="col-md-6 col-sm-12">
           <div class="block">
             <div class="form-group">
@@ -31,35 +48,8 @@
         </div>
       </form>
     </div>
-<!--
-    <div class="contact-box row">
-      <div class="col-md-6 col-sm-12">
-        <div class="block">
-          <h2>{{ i18n "address_title" }}</h2>
-          <ul class="address-block">
-            <li><i class="ion-ios-location-outline"></i>{{i18n "location"}}: {{ .Site.Params.location }}</li>
-            <li><i class="ion-ios-email-outline"></i>{{i18n "email"}}: {{ .Site.Params.email }}</li>
-            <li><i class="ion-ios-telephone-outline"></i>{{i18n "phone"}}: {{ .Site.Params.phone }}</li>
-          </ul>
-          <ul class="social-icons">
-            {{ range .Site.Params.social }}
-            <li><a href="{{ .link | safeURL }}"><i class="{{ .icon }}"></i></a></li>
-            {{ end }}
-          </ul>
-        </div>
-      </div>
-      {{ if .Site.Params.gmap.enable }}
-      <div class="col-md-6 col-sm-12">
-        <div class="block">
-          <div class="google-map">
-            <div class="map" id="map_canvas" data-latitude="{{ .Site.Params.gmap.map_latitude }}" data-longitude="{{ .Site.Params.gmap.map_longitude }}" data-marker="{{ .Site.Params.gmap.map_marker | relURL }}" data-marker-name="{{ .Site.Title }}"></div>
-          </div>
-        </div>
-      </div>
-      {{ end }}
-    </div>
--->
   </div>
 </section>
+{{ end }}
 
 {{ end }}
